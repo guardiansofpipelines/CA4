@@ -13,12 +13,11 @@ services:
       - db #  Make sure the web container is running before starting the database container
   # Database (MySQL)
   db:
-    image: mysql:latest  # Use the latest MySQL image from Docker Hub
-    environment:
-      MYSQL_ROOT_PASSWORD: ca4  # Set the root password
-      MYSQL_DATABASE: myca4                 # Create a database named 'mydb'
+    build: 
+      context: .
+      dockerfile: DBDockerfile
     ports:
-      - "3306:3306"        # Map host port 3306 to container port 3306
+      - "3306:3306"  # Map host port 3306 to container port 3306
     volumes:
-      - ./mysql-data:/var/lib/mysql  # Mount a local directory for MySQL data storage
+      - ./src/Database/init.sql:/docker-entrypoint-initdb.d/init.sql  # Mount a local directory for MySQL data storage
          
