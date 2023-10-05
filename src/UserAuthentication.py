@@ -1,15 +1,16 @@
-from flask import Flask, render_template, request, redirect, url_for, flash, session
+from flask import Flask, render_template, request, redirect, url_for, flash
 from werkzeug.security import generate_password_hash, check_password_hash
 import mysql.connector
 
 app = Flask(__name__)
-app.secret_key = 'your_secret_key_here'  # Replace with a secure secret key
+
 
 # Create and configure MySQL database connection
 db = mysql.connector.connect(
-    host="127.0.0.1",
-    user="root",
-    password="1328",
+    host="127.0.0.1",       # Use the service name defined in Docker Compose
+    port="3306",
+    user="root",     # Assuming this is your MySQL root user
+    password="1328", # Use the MySQL root password you've set in your DBDockerfile
     database="myca4"
 )
 
@@ -32,19 +33,19 @@ def signup():
         cursor = db.cursor()
 
         # Check if the username already exists in the database
-        cursor.execute('SELECT * FROM user WHERE username = %s', (username,))
+        cursor.execute('SELECT * FROM users WHERE username = %s', (username,))
         existing_user = cursor.fetchone()
 
         if existing_user:
-            flash('Username already exists. Please choose a different one.', 'danger')
+            print('Username already exists. Please choose a different one.', 'danger')
         else:
             # Create a new user and add them to the database
             hashed_password = generate_password_hash(password)
-            cursor.execute('INSERT INTO user (username, password) VALUES (%s, %s)',
-                           (username, hashed_password))
+            cursor.execute('INSERT INTO users (username, password, email) VALUES (%s, %s, %s)',
+                           (username, hashed_password, 'email'))
             db.commit()
 
-            flash('Signup successful! You can now log in.', 'success')
+            print('Signup successful! You can now log in.', 'success')
             return redirect(url_for('login'))
 
     return render_template('signup.html')
@@ -58,34 +59,28 @@ def login():
         cursor = db.cursor()
 
         # Retrieve user from the database by username
-        cursor.execute('SELECT * FROM user WHERE username = %s', (username,))
+        cursor.execute('SELECT * FROM users WHERE username = %s', (username,))
         user_row = cursor.fetchone()
 
         if user_row and check_password_hash(user_row[2], password):  # Assuming password hash is in the third column
-            user = User(*user_row)
+            user = User(user_row[0], user_row[1], user_row[2])
 
             # Store the user's ID in the session to track the login state
-            session['user_id'] = user.id
-            flash('Login successful!', 'success')
+            
+            print('Login successful!', 'success')
             return redirect(url_for('dashboard'))
         else:
-            flash('Login failed. Check your username and password.', 'danger')
+            print('Login failed. Check your username and password.', 'danger')
 
     return render_template('login.html')
 
 @app.route('/dashboard')
 def dashboard():
-    if 'user_id' in session:
-        return 'Welcome to the Dashboard'
-    else:
-        flash('You need to log in first.', 'warning')
         return redirect(url_for('login'))
 
 @app.route('/logout')
 def logout():
-    session.pop('user_id', None)
-    flash('Logged out successfully!', 'success')
     return redirect(url_for('login'))
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=5000, debug=True)
