@@ -16,5 +16,5 @@ test:
 
 run:
 	@echo "Running..."
-	python src/app.py
+	python src/UserAuthentication.py
 	@echo "Done running."
