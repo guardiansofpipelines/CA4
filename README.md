@@ -1,4 +1,4 @@
-[![main workflow](https://github.com/guardiansofpipelines/CA4/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/guardiansofpipelines/CA4/actions/workflows/main.yml)
+[![main workflow](https://github.com/guardiansofpipelines/CA4/actions/workflows/main.yml/badge.svg)](https://github.com/guardiansofpipelines/CA4/actions/workflows/main.yml)
 # CA4
 
 ## For Windows
