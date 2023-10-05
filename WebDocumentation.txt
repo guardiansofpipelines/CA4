@@ -1,0 +1,26 @@
+--- Documentation for Web Application (Member 2: 20i-1811) ---
+Python Flask Application:
+   - Developed a web application using Flask for user authentication.
+   - Integrated the Werkzeug library for password hashing and validation.
+
+
+Signup Functionality:
+   - Created a signup route ('/signup') that allows users to register by providing a username and password.
+   - Validated username uniqueness in the database.
+   - Stored user data (username and hashed password) in the 'users' table.
+
+ Login Functionality:
+   - Implemented a login route ('/login') where users can log in using their username and password.
+   - Retrieved user data from the 'users' table based on the provided username.
+   - Checked the hashed password against the stored password hash for authentication.
+   - Used session management to track logged-in users.
+
+Dashboard and Logout:
+   - Created a dashboard route ('/dashboard') that requires user authentication.
+   - Displayed a welcome message to logged-in users.
+   - Implemented a logout route ('/logout') to log users out and clear their session.
+
+Docker image
+    - The docker image is create and pushed to the docker hub
+
+    
