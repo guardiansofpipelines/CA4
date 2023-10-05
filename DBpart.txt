@@ -1,0 +1,33 @@
+Database Management Steps for Login and Signup:
+
+1. Created a MySQL Database:
+   - Created a MySQL database named 'myca4' using the following SQL commands:
+     ```
+     CREATE DATABASE myca4;
+     USE myca4;
+     ```
+
+2. Defined Tables:
+   - Created a 'users' table with columns:
+     - user_id (INT, AUTO_INCREMENT, PRIMARY KEY)
+     - username (VARCHAR(255), NOT NULL)
+     - password (VARCHAR(255), NOT NULL)
+
+3. Python Flask Application:
+   - Developed a Flask web application for user authentication.
+
+4. Created a Database Connection:
+   - Established a connection to the MySQL database in Python using the 'mysql.connector' library.
+   - Configured the connection with host, user, password, and database name.
+
+5. Signup Functionality:
+   - Implemented a signup route ('/signup') where users can register by providing a username and password.
+   - Validated username uniqueness in the database.
+   - Stored user data (username and hashed password) in the 'users' table.
+
+6. Login Functionality:
+   - Created a login route ('/login') for users to log in using their username and password.
+   - Retrieved user data from the 'users' table based on the provided username.
+   - Checked the hashed password against the stored password hash for authentication.
+
+These steps outline the database-related actions for implementing a simplified login and signup functionality in a Flask application.
