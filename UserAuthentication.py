@@ -1,26 +1,27 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session
-from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
-import mmysql.connector
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key_here'  # Replace with a secure secret key
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'  # SQLite database (you can use other databases)
 
-db = SQLAlchemy(app)
+# Replace the database-related code with user management logic
 
-# Define the User model for the database
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(80), unique=True, nullable=False)
-    password = db.Column(db.String(120), nullable=False)
+# Sample data structure to store user information (replace with a proper database)
+users = []
 
-# Create the database tables (you'll need to run this only once)
-db.create_all()
+class User:
+    def __init__(self, username, password):
+        self.id = len(users) + 1
+        self.username = username
+        self.password = generate_password_hash(password)
+
+# Dummy data for testing (replace with actual database interactions)
+users.append(User('user1', 'password1'))
+users.append(User('user2', 'password2'))
 
 @app.route('/')
 def index():
-    return 'Welcome to the Flask Signup/Login App'
+    return render_template('index.html')
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
@@ -29,15 +30,15 @@ def signup():
         password = request.form['password']
 
         # Check if the username already exists
-        existing_user = User.query.filter_by(username=username).first()
+        existing_user = next((user for user in users if user.username == username), None)
+
         if existing_user:
             flash('Username already exists. Please choose a different one.', 'danger')
         else:
-            # Hash the password before storing it in the database
-            hashed_password = generate_password_hash(password, method='sha256')
-            new_user = User(username=username, password=hashed_password)
-            db.session.add(new_user)
-            db.session.commit()
+            # Create a new user and add them to the user list (replace with database code)
+            new_user = User(username, password)
+            users.append(new_user)
+
             flash('Signup successful! You can now log in.', 'success')
             return redirect(url_for('login'))
     
@@ -49,8 +50,8 @@ def login():
         username = request.form['username']
         password = request.form['password']
 
-        # Check if the username exists in the database
-        user = User.query.filter_by(username=username).first()
+        # Check if the username and password match (replace with database code)
+        user = next((user for user in users if user.username == username), None)
 
         if user and check_password_hash(user.password, password):
             # Store the user's ID in the session to track the login state
