@@ -1,0 +1,25 @@
+Docker Compose Setup Steps for Web Application with MySQL Database:
+
+Docker Compose File Creation:
+
+Created a Docker Compose file named docker-compose.yml to define services for our web application and database.
+Service Definitions:
+
+Defined two services in the Docker Compose file:
+Web Server (Flask):
+
+Specified to build the Docker image from the current directory where the Dockerfile is located.
+Mapped host port 5000 to container port 5000 for external access.
+Linked the 'web' container to the 'db' container for inter-service communication.
+Specified a dependency on the 'db' service to ensure the database container starts first.
+Database (MySQL):
+
+Configured the 'db' service for our MySQL database.
+Specified a separate Dockerfile (DBDockerfile) for building the database image.
+Mapped host port 3306 to container port 3306 for external access.
+Mounted a local SQL initialization script (init.sql) into the container's /docker-entrypoint-initdb.d/ directory for database setup during container creation.
+Collaboration and Integration:
+
+Collaborated with team members responsible for the web server and database services to ensure seamless integration.
+Utilized GitHub for version control, creating a repository for our project and coordinating code changes and pull requests.
+These steps represent my contribution as Member 1, focusing on the creation and configuration of the Docker Compose file for our web application with a MySQL database. 
