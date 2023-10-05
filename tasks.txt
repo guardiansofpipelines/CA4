@@ -1,0 +1,23 @@
+Member 1: Muhammad Usman (i200937)
+· Create the Docker Compose file (docker-compose.yml) to define services.
+· Define services for the web server and the database.
+· Configure ports, environment variables, and volumes for both services.
+· Ensure that the services can communicate with each other.
+
+
+Member 2: Danyal Aziz Memon (i201811)
+· Select and set up the web server application (e.g., Node.js, Python, etc.).
+· Configure the Dockerfile for the web server service.
+· Create a Docker image for the web server.
+· Push the Docker image to the group's Docker Hub profile.
+· Document the steps for building and running the web server service.
+· Maintain your code on a GitHub repository.
+
+
+Member 3: Ehtisham ul Hassan (i200462)
+· Choose and set up the database system (e.g., MySQL, PostgreSQL, etc.).
+· Configure the Dockerfile for the database service.
+· Create a Docker image for the database.
+· Push the Docker image to the group's Docker Hub profile.
+· Document the steps for building and running the database service.
+· Maintain your code on a GitHub repository.
