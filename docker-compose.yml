@@ -8,11 +8,11 @@ services:
     ports:
       - "5000:5000"  # Map host port 5000 to container port 5000
     links:
-      - web  # Link the web container to the database container
+      - db  # Link the web container to the database container
     depends_on:
-      - web # Make sure the web container is running before starting the database container
+      - db #  Make sure the web container is running before starting the database container
   # Database (MySQL)
-  database:
+  db:
     image: mysql:latest  # Use the latest MySQL image from Docker Hub
     environment:
       MYSQL_ROOT_PASSWORD: ca4  # Set the root password
@@ -21,8 +21,4 @@ services:
       - "3306:3306"        # Map host port 3306 to container port 3306
     volumes:
       - ./mysql-data:/var/lib/mysql  # Mount a local directory for MySQL data storage
-    links:
-      - db # Link the database container to the web container
-    depends_on:
-      - db # Make sure the database container is running before starting the web container
          
