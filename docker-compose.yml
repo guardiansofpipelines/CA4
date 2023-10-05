@@ -16,7 +16,7 @@ services:
     image: mysql:latest  # Use the latest MySQL image from Docker Hub
     environment:
       MYSQL_ROOT_PASSWORD: ca4  # Set the root password
-      MYSQL_DATABASE: mydb                 # Create a database named 'mydb'
+      MYSQL_DATABASE: myca4                 # Create a database named 'mydb'
     ports:
       - "3306:3306"        # Map host port 3306 to container port 3306
     volumes:

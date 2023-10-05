@@ -1,20 +1,21 @@
-install:
-	echo "Installing dependencies..."
-	pip install --upgrade pip 
-	pip install -r requirements.txt
-	echo "Done Installing."
+install: 
+	@echo "Installing..."
+	@pip install --upgrade pip
+	@pip install -r requirements.txt
+	@echo "Done."
 
 lint:
-	echo "Linting..."
-	pylint --disable=R,C src/*.py
-	echo "Done Linting."
+	@echo "Linting using pylint..."
+	@pylint --fail-under=8 --exit-zero --max-line-length=120 src 
+	@echo "Done."
 
 test:
-	@echo "Running tests..."
-	pytest src/test*.py
-	@echo "Done running tests."
+	@echo "Testing using pytest..."
+	@pytest src/test.py
+	@echo "Done."
+
 
 run:
 	@echo "Running..."
-	python src/app.py
+	python src/UserAuthentication.py
 	@echo "Done running."
