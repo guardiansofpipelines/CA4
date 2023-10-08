@@ -7,7 +7,7 @@ app = Flask(__name__)
 
 # Create and configure MySQL database connection
 db = mysql.connector.connect(
-    host="127.0.0.1",       # Use the service name defined in Docker Compose
+    host="db",       # Use the service name defined in Docker Compose
     port="3306",
     user="root",     # Assuming this is your MySQL root user
     password="1328", # Use the MySQL root password you've set in your DBDockerfile
