@@ -10,7 +10,8 @@ services:
     links:
       - db  # Link the web container to the database container
     depends_on:
-      - db #  Make sure the web container is running before starting the database container
+      db:
+        condition: service_healthy  # Wait for the 'db' service to be healthy
   # Database (MySQL)
   db:
     build: 
@@ -20,4 +21,8 @@ services:
       - "3306:3306"  # Map host port 3306 to container port 3306
     volumes:
       - ./src/Database/init.sql:/docker-entrypoint-initdb.d/init.sql  # Mount a local directory for MySQL data storage
-         
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 10s
+      retries: 5    
