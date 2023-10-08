@@ -29,3 +29,24 @@ jobs:
       - name: Test with pytest
         run: |
           make test
+  docker-push:
+    # if the merge is to the main branch, then push the docker image
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: [ubuntu-latest]
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Docker Login
+        uses: docker/login-action@v3.0.0
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
+
+      - name: Build the Docker image
+        run: docker build ./src/db --file Dockerfile --tag ca4-db:latest
+
+      - name: Push Docker iamge
+        run: |
+          docker tag ca4-db:latest ${{ secrets.DOCKER_USERNAME }}/ca4-db:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/ca4-db:latest
